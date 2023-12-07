@@ -3,9 +3,10 @@
 
 <head>
   <title>update org</title>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-   <style> .container {
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <style>
+    .container {
       max-width: 500px;
     }
 
@@ -21,25 +22,20 @@
 <body>
   <div class="container mt-5">
 
- 
-
-    <form method="post" id="update_user" name="update_user" 
-    action="<?= site_url('/update') ?>">
+    <form method="post" id="update_user" name="update_user" action="<?= site_url('/update') ?>">
       <input type="hidden" name="org_id" id="id" value="<?php echo $user_obj['org_id']; ?>">
 
-      <div class="form-group">
-        <label>oeganisation name</label>
-        <input type="text" name="org_name" class="form-control" value="<?php echo $user_obj['org_name']; ?>">
-      </div>
+      <?php foreach ($user_obj as $column => $value): ?>
+        <div class="form-group">
+          <label><?php echo ucfirst(str_replace('_', ' ', $column)); ?></label>
+          <?php if ($column == 'org_lines'): ?>
+            <input type="number" name="<?php echo $column; ?>" class="form-control" value="<?php echo $value; ?>">
+          <?php else: ?>
+            <input type="text" name="<?php echo $column; ?>" class="form-control" value="<?php echo $value; ?>">
+          <?php endif; ?>
+        </div>
+      <?php endforeach; ?>
 
-      <div class="form-group">
-        <label>organisation plan</label>
-        <input type="text" name="org_plan" class="form-control" value="<?php echo $user_obj['org_plan']; ?>">
-      </div>
-      <div class="form-group">
-        <label>organisation lines</label>
-        <input type="number" name="org_lines" class="form-control" value="<?php echo $user_obj['org_lines']; ?>">
-      </div>
       <div class="form-group">
         <button type="submit" class="btn btn-warning">Edit Data</button>
       </div>
@@ -50,24 +46,24 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/additional-methods.min.js"></script>
   <script>
-    if ($("#update_user").length > 0) {
-      $("#update_user").validate({
-        rules: {
-          org_name: {
+  if ($("#update_user").length > 0) {
+    $("#update_user").validate({
+      rules: {
+        <?php foreach ($user_obj as $column => $value): ?>,
+          '<?php echo $column; ?>': { // Wrap column names in single quotes
             required: true,
           },
-         
-        },
-        messages: {
-          org_name: {
-            required: "Name is required.",
+        <?php endforeach; ?>,
+      },
+      messages: {
+        <?php foreach ($user_obj as $column => $value): ?>,
+          '<?php echo $column; ?>': { // Wrap column names in single quotes
+            required: "<?php echo ucfirst(str_replace('_', ' ', $column)); ?> is required.",
           },
-          
-          
-        },
-      })
-    }
-  </script>
+        <?php endforeach; ?>,
+      },
+    })
+  }
+</script>
 </body>
-
 </html>

@@ -10,16 +10,16 @@ class AddDynamicColumnToOrg extends Migration
 {
     protected $request;
 
-    public function __construct(RequestInterface $request)
+    public function __construct()
     {
-        $this->request = $request;
+        // $this->request = $request;
     }
 
 
 
-    public function up()
+    public function up($column = '')
     {
-        $column = $this->request->getPost('new_column'); // Adjust this based on your form input name
+        // $column = $this->request->getPost('new_column'); // Adjust this based on your form input name
 
         $this->forge->addColumn('org', [
             $column => [
@@ -31,9 +31,9 @@ class AddDynamicColumnToOrg extends Migration
         ]);
     }
 
-    public function down()
+    public function down($column = '')
     {
-        $column = $this->request->getPost('new_column'); // Adjust this based on your form input name
+        // $column = $this->request->getPost('new_column'); // Adjust this based on your form input name
 
         $this->forge->dropColumn('org', $column);
     }

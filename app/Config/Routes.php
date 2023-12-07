@@ -15,5 +15,5 @@ $routes->get('delete/(:num)', 'OrgCrud::delete/$1');
 // app/Config/Routes.php
 
 $routes->get('orgcrud/add-dynamic-column', 'OrgCrud::addDynamicColumn');
-$routes->post('save-dynamic-column', 'OrgCrud::saveDynamicColumn');
+$routes->post('/saveDynamicColumn', 'OrgCrud::saveDynamicColumn');
 
